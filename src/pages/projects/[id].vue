@@ -1,0 +1,12 @@
+<script setup lang="ts">
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
+</script>
+
+<template>
+  <div>
+    <h1>Project ID: {{ route.params?.id }}</h1>
+    <p>This is a simple project page built with Vue 3 and TypeScript.</p>
+  </div>
+</template>
