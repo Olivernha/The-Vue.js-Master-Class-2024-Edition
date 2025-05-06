@@ -21,7 +21,7 @@ const projects = ref<Tables<'projects'>[] | null>(null)
     <ul>
       <li v-for="project in projects" :key="project.id">
         {{ project.name }}
-      </li
+      </li>
     </ul>
   </div>
 </template>
