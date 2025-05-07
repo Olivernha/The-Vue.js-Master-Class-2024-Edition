@@ -3,18 +3,20 @@ import VueRouter from 'unplugin-vue-router/vite'
 import tailwind from 'tailwindcss'
 import autoprefixer from 'autoprefixer'
 import { defineConfig } from 'vite'
+import { VueRouterAutoImports } from 'unplugin-vue-router'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
 import AutoImport from 'unplugin-auto-import/vite'
+
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     vue({
-      template:{
+      template: {
         compilerOptions: {
           isCustomElement: (element) => element.startsWith('iconify-icon'),
         },
-      }
+      },
     }),
     VueRouter(),
     vueDevTools(),
@@ -23,24 +25,21 @@ export default defineConfig({
         /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
         /\.vue$/,
         /\.vue\?vue/, // .vue
-        /\.md$/ // .md
+        /\.md$/, // .md
       ],
-      imports: ['vue', 'vue-router'],
+      imports: ['vue', VueRouterAutoImports],
       dts: true,
-      viteOptimizeDeps: true
+      viteOptimizeDeps: true,
     }),
   ],
   css: {
     postcss: {
-      plugins: [
-        tailwind(),
-        autoprefixer(),
-      ],
+      plugins: [tailwind(), autoprefixer()],
     },
   },
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
 })
