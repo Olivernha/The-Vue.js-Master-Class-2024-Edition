@@ -20,7 +20,9 @@ export default defineConfig({
     }),
     VueRouter(),
     vueDevTools(),
-    Components({ /* options */ }),
+    Components({
+      /* options */
+    }),
     AutoImport({
       include: [
         /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
@@ -28,9 +30,16 @@ export default defineConfig({
         /\.vue\?vue/, // .vue
         /\.md$/, // .md
       ],
-      imports: ['vue', VueRouterAutoImports],
+      imports: [
+        'vue',
+        VueRouterAutoImports,
+        {
+          pinia: ['defineStore', 'storeToRefs', 'acceptHMRUpdate'],
+        },
+      ],
       dts: true,
       viteOptimizeDeps: true,
+      dirs: ['src/stores'],
     }),
   ],
   css: {
