@@ -5,16 +5,18 @@ import type { Project } from '@/utils/supaQueries'
 const route = useRoute('/projects/[slug]')
 
 const project = ref<Project | null>(null)
+
 watch(
   () => project.value?.name,
   () => {
     usePageStore().pageData.title = `Project: ${project.value?.name || ''}`
-  },
+  }
 )
-const getProjects = async () => {
-  const { data, error } = await projectQuery(route.params.slug)
 
-  if (error) console.log(error)
+const getProjects = async () => {
+  const { data, error, status } = await projectQuery(route.params.slug)
+
+  if (error) useErrorStore().setError({ error, customCode: status })
 
   project.value = data
 }
@@ -26,7 +28,7 @@ await getProjects()
   <Table v-if="project">
     <TableRow>
       <TableHead> Name </TableHead>
-      <TableCell>{{ project.name }}</TableCell>
+      <TableCell> {{ project.name }} </TableCell>
     </TableRow>
     <TableRow>
       <TableHead> Description </TableHead>
@@ -36,7 +38,7 @@ await getProjects()
     </TableRow>
     <TableRow>
       <TableHead> Status </TableHead>
-      <TableCell> {{ project.status }} </TableCell>
+      <TableCell>{{ project.status }}</TableCell>
     </TableRow>
     <TableRow>
       <TableHead> Collaborators </TableHead>
